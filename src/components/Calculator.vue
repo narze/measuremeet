@@ -1,9 +1,17 @@
 <template>
   <div class="calculator">
-    <span class="title">Number of people : </span>
-    <button class="btn add" @click="add">+</button>
-    <span class="people-count">{{ peopleCount }}</span>
-    <button class="btn remove" @click="remove">-</button>
+    <div class="row">
+      <span class="title">Number of people : </span>
+      <button class="btn add" @click="add">+</button>
+      <span class="people-count">{{ peopleCount }}</span>
+      <button class="btn remove" @click="remove">-</button>
+    </div>
+    <div class="row">
+      <span class="title">Meeting duration : </span>
+      <button class="btn add-duration" @click="addDuration">+</button>
+      <span class="meeting-duration">{{ meetingDuration }} Minutes</span>
+      <button class="btn remove-duration" @click="removeDuration">-</button>
+    </div>
   </div>
 </template>
 
@@ -14,6 +22,7 @@ export default {
   data() {
     return {
       peopleCount: 2,
+      meetingDuration: 0,
     };
   },
   methods: {
@@ -22,6 +31,12 @@ export default {
     },
     remove() {
       this.peopleCount = Math.max(2, this.peopleCount - 1);
+    },
+    addDuration() {
+      this.meetingDuration += 5;
+    },
+    removeDuration() {
+      this.meetingDuration = Math.max(0, this.meetingDuration - 5);
     },
   },
 };
@@ -44,6 +59,10 @@ export default {
 
 .people-count {
   @apply mx-2
+}
+
+.row {
+  @apply my-2
 }
 
 .title {

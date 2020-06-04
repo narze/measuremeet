@@ -59,4 +59,29 @@ describe('Calculator.vue', () => {
     expect(wrapper.find('.people-count').text()).to.include('2');
     expect(wrapper.vm.peopleCount).to.eq(2);
   });
+
+  it('renders meeting duration in minutes with add/remove buttons', async () => {
+    expect(wrapper.vm.meetingDuration).to.eq(0);
+    expect(wrapper.find('.meeting-duration').text()).to.include('0');
+
+    await expect(wrapper.find('button.add-duration').trigger('click'));
+
+    expect(wrapper.vm.meetingDuration).to.eq(5);
+    expect(wrapper.find('.meeting-duration').text()).to.include('5');
+
+    await expect(wrapper.find('button.add-duration').trigger('click'));
+
+    expect(wrapper.vm.meetingDuration).to.eq(10);
+    expect(wrapper.find('.meeting-duration').text()).to.include('10');
+
+    await expect(wrapper.find('button.remove-duration').trigger('click'));
+
+    expect(wrapper.vm.meetingDuration).to.eq(5);
+    expect(wrapper.find('.meeting-duration').text()).to.include('5');
+
+    // Set duration directly, then use nextTick()
+    wrapper.vm.meetingDuration = 30;
+    await wrapper.vm.$nextTick();
+    expect(wrapper.find('.meeting-duration').text()).to.include('30');
+  });
 });
