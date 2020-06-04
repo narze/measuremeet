@@ -27,12 +27,36 @@ describe('MeasureMeet.vue', () => {
 });
 
 describe('Calculator.vue', () => {
-  it('renders calculator with increment/decrement people buttons', () => {
-    const wrapper = shallowMount(Calculator, {
+  let wrapper;
+
+  beforeEach(() => {
+    wrapper = shallowMount(Calculator, {
       propsData: {},
     });
+  });
 
+  it('renders calculator with add/remove people buttons', () => {
     expect(wrapper.find('button.add').exists()).to.eq(true);
     expect(wrapper.find('button.remove').exists()).to.eq(true);
+  });
+
+  it('renders people count and reacts to add/remove buttons', async () => {
+    expect(wrapper.find('.people-count').text()).to.include('2');
+    expect(wrapper.vm.peopleCount).to.eq(2);
+
+    await expect(wrapper.find('button.add').trigger('click'));
+
+    expect(wrapper.find('.people-count').text()).to.include('3');
+    expect(wrapper.vm.peopleCount).to.eq(3);
+
+    await expect(wrapper.find('button.remove').trigger('click'));
+
+    expect(wrapper.find('.people-count').text()).to.include('2');
+    expect(wrapper.vm.peopleCount).to.eq(2);
+
+    await expect(wrapper.find('button.remove').trigger('click'));
+
+    expect(wrapper.find('.people-count').text()).to.include('2');
+    expect(wrapper.vm.peopleCount).to.eq(2);
   });
 });
