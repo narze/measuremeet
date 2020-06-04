@@ -4,14 +4,21 @@
     <p>
       Measure meeting time so you won't waste it
     </p>
+
+    <Calculator />
   </div>
 </template>
 
 <script>
+import Calculator from './Calculator.vue';
+
 export default {
   name: 'MeasureMeet',
   props: {
     msg: String,
+  },
+  components: {
+    Calculator,
   },
 };
 </script>
