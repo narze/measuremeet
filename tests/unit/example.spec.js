@@ -84,4 +84,21 @@ describe('Calculator.vue', () => {
     await wrapper.vm.$nextTick();
     expect(wrapper.find('.meeting-duration').text()).to.include('30');
   });
+
+  it('renders man-minute if result is not zero', async () => {
+    expect(wrapper.vm.result).to.eq(0);
+    expect(wrapper.vm.showResult).to.eq(false);
+
+    expect(wrapper.text()).not.to.include('man-minute');
+
+    wrapper.vm.peopleCount = 3;
+    wrapper.vm.meetingDuration = 15;
+
+    await wrapper.vm.$nextTick();
+
+    expect(wrapper.vm.result).to.eq(45);
+    expect(wrapper.vm.showResult).to.eq(true);
+
+    expect(wrapper.text()).to.include('45 man-minute');
+  });
 });

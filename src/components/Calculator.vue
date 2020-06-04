@@ -12,6 +12,11 @@
       <span class="meeting-duration">{{ meetingDuration }} Minutes</span>
       <button class="btn remove-duration" @click="removeDuration">-</button>
     </div>
+    <div class="row">
+      <p class="result" v-if="showResult">
+        This meeting will take {{ result }} man-minute of work, be quick!
+      </p>
+    </div>
   </div>
 </template>
 
@@ -39,11 +44,19 @@ export default {
       this.meetingDuration = Math.max(0, this.meetingDuration - 5);
     },
   },
+  computed: {
+    result() {
+      return this.peopleCount * this.meetingDuration;
+    },
+    showResult() {
+      return this.result !== 0;
+    },
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="css">
+<style scoped lang="scss">
 
 .calculator  {
   @apply mx-4 my-4;
@@ -59,6 +72,10 @@ export default {
 
 .people-count {
   @apply mx-2
+}
+
+.result {
+  @apply mt-8 text-xl font-bold py-4 px-6 rounded bg-red-500 text-white;
 }
 
 .row {
